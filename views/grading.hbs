@@ -1,0 +1,97 @@
+{{>header}}
+<style>
+	img.logo{
+		display: block;
+		margin: 0 auto;
+	}
+	.avg_grade{
+		text-align: center;
+		font-size: 12.0rem;
+		font-family: RobotoMono;
+
+	}
+
+	@font-face {
+		font-family: RobotoMono;
+		src: url(font/RobotoMono-Light.ttf);
+	}
+
+	.bargraph{
+		font-family: RobotoMono;
+
+	}
+	.bargraph > div:first-child{
+		display: flex;
+		flex-direction: row;
+		height: 160px;
+		color: #a3a3a3;
+		border-right: 1px solid #eee;
+	}
+	.bargraph > div:last-child{
+		display: flex;
+		flex-direction: row;
+		color: #a3a3a3;
+		border-right: 1px solid #eee;
+	}
+	.bar { 
+		flex-basis: 30%;
+		display: flex;
+		flex-direction: column; box-sizing: border-box;
+	}
+
+ .button {
+   display: block;text-align: center;
+   width: 100%;
+   font-size: 32px;
+   text-decoration: none;
+   text-transform: uppercase;
+   color: white;
+   font-weight: 600;
+   background-color: #1EAEDB;
+   border: none;
+   height: 100%;
+   border-radius: 9px;
+   padding:5px 0px;
+ }
+
+	input[type="number"]{
+		padding: 0px;
+		font-size: 12.0rem;
+		height: unset;
+		width: 15rem;
+		letter-spacing: -1.0rem;
+	}
+	.button:hover,a:hover{
+		color: white;
+	}
+</style>
+<script>
+	$(function () {
+		$("#input").on("input", function (e) {
+			input = $("#input").val();
+			if(input.length>1 && input< 10){
+				$("#input").val(parseInt(input));
+				return;
+			}
+			if(input > 16 ){
+				$("#input").val(17);
+
+				return;
+			}
+		});
+	});
+</script>
+<hr>
+<form action="" method="post">
+<div style="" class="row">
+	<p style="text-align: center;">You're currently not logged in. Go back and login to make a verrified vote</p>
+
+	<h1 class="avg_grade" style=""> <span> V</span><input id="input" name="incorrect_opinion" type="number" pattern="[0-9]*" value="0"></input></h1>
+
+</div>
+<h5  style="text-align: center;" >{{climb.climb_code}} set by SMORF</h5>
+<hr>
+<div class="row" style="">
+	<button class="button" type="submit">Submit</button>
+</div>
+</form>

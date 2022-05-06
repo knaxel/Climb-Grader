@@ -1,0 +1,74 @@
+{{>header}}
+
+
+<div class="navbar">
+	<ul class="">
+		<li><a class="navlink" href="/"  >Home</a></li>
+		<li><a class="navlink" href="/signup"  style="font-weight: 600;">Sign Up</a></li>
+		<li><a class="navlink" href="/login" >Sign In</a></li>
+	</ul>
+</div>
+
+
+<div class="row" >
+	<div class="five columns" style="margin: 0 auto;float: none;text-align: center;margin-top: 5%"> <p>Remember! Each gym should only have one account. Only your gym owner, manager, or team leader needs to have an account for your gym!</p></div>
+</div>
+<hr>
+
+{{#if errors}}
+<div class="row" >
+	<ul class="five columns" style="margin: 0 auto;float: none;text-align: center;">
+    {{#each errors}}
+
+    <li style="color:red;">{{this.msg}}</li>
+    {{/each}}
+
+	</ul>
+</div>
+<hr>
+
+{{/if}}
+<form action="" method="post">
+
+	<h4 style="margin-top: 5%">General Info : </h4>
+	<div class="row">
+		<div class="column"> 
+			<label > gym name <small></small> </label>
+			<input type="text" name="gym_name" class="u-full-width" value="{{#if req}}{{#if req.gym_name}}{{req.gym_name}}{{/if}}{{/if}}"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="column"> 
+			<label > your name <small></small> </label>
+			<input type="text" name="name" class="u-full-width" value="{{#if req}}{{#if req.name}}{{req.name}}{{/if}}{{/if}}"/>
+		</div>
+	</div>
+	<h4 style="margin-top: 0%">Authentication : </h4>
+	<div  class="row">
+		<div class="column"> 
+			<label > email </label>
+			<input type="email" name="email" class="u-full-width" value="{{#if req}}{{#if req.email}}{{req.email}}{{/if}}{{/if}}"/>
+		</div>
+	</div>
+	<div  class="row">
+		<div class="column"> 
+			<label > phone <small>(optional)</small> </label>
+			<input type="text" name="phone" class="u-full-width" value="{{#if req}}{{#if req.phone}}{{req.phone}}{{/if}}{{/if}}"/>
+		</div>
+	</div>
+	<div  class="row">
+		<div class="column"> 
+			<label > password </label>
+			<input type="password" name="password" class="u-full-width" value=""/>
+		</div>
+	</div>
+	<div  class="row">
+		<div class="column"> 
+			<label > password confirm </label>
+			<input type="password" name="password_repeat" class="u-full-width" value=""/>
+		</div>
+	</div>
+	<div class="row">
+		<button  type="submit" name="submit" value="submit" style="float:right;">Create the Account</button>
+	</div>
+</form>

@@ -1,0 +1,50 @@
+
+{{>header}}
+
+<div class="navbar">
+	<ul class="">
+		<li><a class="navlink" href="/" style="font-weight: 600;" >Home</a></li>
+		{{#if user}}
+		<li><a class="navlink" href="/account" >Account</a></li>
+		{{else}}
+		<li><a class="navlink" href="/signup" >Sign Up</a></li>
+		<li><a class="navlink" href="/login" >Sign In</a></li>
+		{{/if}}
+	</ul>
+</div>
+
+<div  style="margin-top: 5%" class="row">
+
+	<h3>About</h3>
+	<p>Climb Grader is an online web application that climbing gyms can use to allow their patreons to communicatively grade their indoor climbing routes using QR codes that are unique to the gym. Climb Grader is currently in development and will hopefully first be tested at the Colorado University of Boulder's climbing gym.</p>
+	<hr>
+
+	<h3>Tutorial</h3>
+	<h4>For Climber's</h4>
+	<p>Gym's using Climb Grader will have a QR code and 5 digit number next to the route(s) you can grade.</p>
+	<ol>
+		<li> scan the QR code</li>
+		<li> enter the 5 digit climb number </li>
+		<li> grade (or regrade) the climbing route one time per device.</li>
+	</ol>
+
+	<h4>Route Setters :</h4>
+	<p>Your gym owner or manager will give you a QR code to login with. When you are finished setting a new route in your gym : </p>
+	<ol>
+		<li> scan the QR code</li>
+		<li> enter any route setter info it may ask you for.</li>
+		<li> click "create route" </li>
+		<li> write down the generated 5 digit code.</li>
+	</ol>
+	<p style="color:red">Note: If the 5 digit code to a climb is lost at any point the easiest solution is to create a new route and reset the grading.</p>
+
+	<h4>Gym Owner/Manager :</h4>
+	<p style="color:red">Note: Accounts without activity for more than 30 days will be deleted.</p>
+	<p style="color:red">Note: gyms can have a maximum of about 50,000 routes at once. Only gym owners can prevent particular routes from being replaced by a newly generated route. </p>
+	<ol>
+		<li> sign up for an account, this will ask for your gym name</li>
+		<li> create several copy's of the QR code that is for your climbers on the wall. <span>I recommend printable sticker sheets.</span></li>
+		<li> leave the route setters QR code accessible to the setters</li>
+		<li> have your route setters login and create 5 digit codes for each of your climbs.</li>
+	</ol>
+</div>

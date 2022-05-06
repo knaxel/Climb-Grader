@@ -1,0 +1,108 @@
+
+{{>header}}
+
+<div class="navbar">
+	<ul class="">
+		<li><a class="navlink" href="/"  >Home</a></li>
+		
+		<li><a class="navlink" href="/account" style="font-weight: 600;" >Account</a></li>
+	</ul>
+</div>
+
+
+<div class="row"  >
+	<div class="col">
+
+		<div class="row" style="padding-top: 5%;display: flex; flex-direction: row;">
+
+			<h3 style="padding:0 1rem">Your Gym QR-Code :</h3> 
+			
+			<label class="switch" style="">
+	  		<input type="checkbox" onclick="toggle_qrClimber()">
+	  		<span class="slider round"></span>
+			</label>
+
+		</div>
+		<div class="row" style="">
+			<p>This is the QR code climbers can use to view or grade a climb in your gym. We suggest making stickers of the QR code to go with the 5 digit climb code.</p>
+		</div>
+
+		<img id="qr_climber" class="qrcode" src="" />
+
+		<div class="row" style="padding-top: 5%;display: flex; flex-direction: row;">
+
+			<h3  style="padding:0 1rem">Setters QR-Code : </h3>
+
+			<label class="switch" style="">
+	  		<input type="checkbox" onclick="toggle_qrSetter()">
+	  		<span class="slider round"></span>
+			</label>
+			
+		</div>
+		<div class="row" style="">
+			<p>This is the QR code setters will use when they're done creating routes. Keep this QR code kind of secret, you'll need to make a new one if someone abuses it.</p>
+		</div>
+			<img id="qr_setter" class="qrcode" src="" />
+
+	</div>
+
+</div>
+
+<hr>
+
+
+<div class="row" >
+
+	<a class="button" href="/logout" >Logout</a>
+</div>
+
+<style>
+	.switch {
+		 position:relative;
+		margin-top: .3rem;
+	}
+	@media (min-width: 550px) {
+	.switch {
+		margin-top: 9px;
+	}
+	}
+	img.qrcode {
+
+		display: none;
+		border: 1px solid black;
+		margin: 0 auto;
+		padding: 5rem;
+	}
+
+</style>
+<script type="text/javascript">
+	var code_gym = "{{user.gym._id}}";
+	var code_setters = "{{user.gym.setter_code}}";
+
+	var url_climber = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.110:3000/g/` + code_gym  ;
+	var qr_img_climber = $("#qr_climber");
+	qr_img_climber[0].src = url_climber;
+
+	var url_setter = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.110:3000/s/`+ code_gym +"/"+ code_setters;
+	var qr_img_setter = $("#qr_setter");
+	qr_img_setter[0].src = url_setter;
+
+	function toggle_qrSetter(){
+		if (qr_img_setter.css("display") == "none") {
+		  qr_img_setter.css("display", "block") 
+		}else{
+		  qr_img_setter.css("display", "none");
+		} 
+		
+	}
+	function toggle_qrClimber(){
+		if (qr_img_climber.css("display") == "none") {
+			qr_img_climber.css("display", "block");
+		}else{
+			qr_img_climber.css("display", "none");
+		}
+	}
+
+
+
+</script>

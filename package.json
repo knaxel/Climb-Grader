@@ -1,0 +1,35 @@
+{
+  "name": "climb-grader",
+  "version": "1.0.0",
+  "description": "A web application for climbing gyms that allows their patreons to grade and share grades with qr codes on indoor climbing routes.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node functions/app.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knaxel/Climb-Grader.git"
+  },
+  "keywords": [
+    "climb",
+    "climbing",
+    "gym",
+    "qr"
+  ],
+  "author": "knaxel (Emerson Cole Philipp)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/knaxel/Climb-Grader/issues"
+  },
+  "homepage": "https://github.com/knaxel/Climb-Grader#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "express-handlebars": "^6.0.5",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.14.0",
+    "mongodb": "^4.5.0",
+    "nodemailer": "^6.7.5"
+  }
+}
