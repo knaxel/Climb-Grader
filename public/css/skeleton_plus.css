@@ -1,4 +1,11 @@
 
+:root{
+	--bg-c: #fff;
+	--main-c: #222;
+	--sec-c: #41B7DC;
+	--border-c: #eee;
+	--slider-c: #ccc;
+}
 .switch {
 	position: absolute;
 	display: inline-block;
@@ -19,7 +26,6 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #ccc;
 	-webkit-transition: .4s;
 	transition: .4s;
 }
@@ -31,17 +37,8 @@
 	width: 26px;
 	left: 4px;
 	bottom: 4px;
-	background-color: white;
 	-webkit-transition: .4s;
 	transition: .4s;
-}
-
-input:checked + .slider {
-	background-color: #2196F3;
-}
-
-input:focus + .slider {
-	box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .slider:before {
@@ -57,4 +54,138 @@ input:checked + .slider:before {
 
 .slider.round:before {
 	border-radius: 50%;
+}
+
+
+.navbar{
+	margin-top: 1.5rem;
+}
+.navbar ul {
+	display: flex;
+	list-style: none;
+	flex: row;
+	margin: 0; 
+}
+.navbar li {
+	margin: 0; 
+	margin-right: 35px;
+}
+.navlink {
+	text-decoration: none;
+	text-transform: uppercase;
+	cursor: pointer;
+	line-height: 5;
+	font-weight: 400;
+	font-size: ;
+}
+img.logo{
+	display: block;
+	margin: 0 auto;
+	width: 128px;
+	height: 128px;
+	content:url('/images/logo_light.png');
+}
+
+label {
+	font-weight: 400;
+	text-transform: uppercase;
+
+}
+
+
+.slider {
+	background-color: var(--slider-c);
+}
+.slider:before {
+	background-color: #fff;
+}
+input:checked + .slider {
+	background-color: #2196F3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+.navbar{
+
+	border-top: 1px solid var(--border-c);
+	border-bottom: 1px solid var(--border-c);
+}
+body{
+	background-color: var(--bg-c);
+	color:  var(--main-c);
+}
+a{
+	color: var(--main-c);
+}
+a: hover{
+	color: var(--sec-c);
+}
+.navlink{
+	color: var(--main-c);
+
+}
+img.qrcode{
+	background-color: white;
+}
+
+hr {border-color: var(--border-c);}
+
+@media (prefers-color-scheme: light) {
+	:root{
+		--bg-c: #fff;
+		--main-c: #222;
+		--sec-c: #41B7DC;
+		--border-c: #eee;
+		--slider-c: #ccc;
+	}
+
+}
+@media (prefers-color-scheme: dark) {
+	
+	:root{
+		--bg-c: #222;
+		--main-c: #f1f1f1;
+		--sec-c: #41B7DC;
+		--bc: #eee;
+		--border-c: #5f5f5f;
+		--slider-c: #5d5d5d;
+		--input-bg-c: #333;
+
+	}
+	.button,button{
+		background-color: var(--main-c);
+		color: var(--main-c);
+		background-color: var(--input-bg-c);
+	}
+	img.logo{
+		content: url('/images/logo_dark.png');
+	}
+	input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select{
+		background-color: var(--input-bg-c);
+	}
+	.button:hover,
+	button:hover,
+	input[type="submit"]:hover,
+	input[type="reset"]:hover,
+	input[type="button"]:hover,
+	.button:focus,
+	button:focus,
+	input[type="submit"]:focus,
+	input[type="reset"]:focus,
+	input[type="button"]:focus{
+background-color: var(--input-bg-c);
+		color: white;
+	  border-color: #fff;
+	  outline: 1; 
+	}
+	.slider{
+
+	}
+	.header a:hover {
+		color: white;
+	}
+
+
 }

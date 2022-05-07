@@ -70,7 +70,7 @@ router.get('/:gym_code/:climb_code', async (req, res) => {
 });
 router.post('/:gym_code/:climb_code', async (req, res) => {
 	
-	res.status(404).render('404', {url:'/g'+req.url});
+	res.status(404).render('404', {url:'-- thats not a feature yet' });
 	
 	var session = req.session;
 	

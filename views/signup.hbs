@@ -1,5 +1,5 @@
 {{>header}}
-
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
 <div class="navbar">
 	<ul class="">
@@ -17,7 +17,7 @@
 
 {{#if errors}}
 <div class="row" >
-	<ul class="five columns" style="margin: 0 auto;float: none;text-align: center;">
+	<ul  style="margin: 0 auto;float: none;text-align: center;">
     {{#each errors}}
 
     <li style="color:red;">{{this.msg}}</li>
@@ -68,6 +68,10 @@
 			<input type="password" name="password_repeat" class="u-full-width" value=""/>
 		</div>
 	</div>
+	<div class="row" style="justify-content: right;display: flex;">
+		<div class="h-captcha" data-sitekey="{{captcha_site_key}}"></div>
+	</div>
+
 	<div class="row">
 		<button  type="submit" name="submit" value="submit" style="float:right;">Create the Account</button>
 	</div>

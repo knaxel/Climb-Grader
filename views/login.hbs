@@ -1,6 +1,7 @@
 
 {{>header}}
 
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <div class="navbar">
 	<ul class="">
 		<li><a class="navlink" href="/"  >Home</a></li>
@@ -42,6 +43,10 @@
 			<input type="password" name="password" class="u-full-width" />
 		</div>
 	</div>
+	<div class="row" style="justify-content: center;display: flex;">
+		<div class="h-captcha" data-sitekey="{{captcha_site_key}}"></div>
+	</div>
+
 	<div  class="row">
 		<button style="float:right;"  type="submit" name="submit" value="submit" >Login</button>
 		<a style="float:right;margin-right:1rem;" class="button" href="signup" >Sign Up</a>

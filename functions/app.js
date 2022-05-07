@@ -14,11 +14,12 @@ const route_login = require("./routes/login");
 const route_browse = require("./routes/browse")
 const base62 = require('./my_modules/base62');
 
+var nodemailer = require('./mailer.js');
 
 //express app object
 const app = express();
 
-//variables throughout
+//variables throughout 
 
 
 //connect to the database and then start the application

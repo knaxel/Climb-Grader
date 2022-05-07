@@ -51,17 +51,32 @@
  .button:hover,a:hover{
     color: white;
   }
+    #grade_container{
+    background-image: url(/images/gradeshadow_light.jpg);
+  }
+@media (prefers-color-scheme: dark) {
+  #grade_container{
+    background-image: url(/images/gradeshadow_dark.jpg);
+  }
+
+ .bargraph > div:first-child,
+ .bargraph > div:last-child{
+   color: #535353;
+
+ }
+
+}
 </style>
 {{>header}}
 <hr>
-<div style="background-image: url(/images/gradeshadow_light.jpg);background-position: 49% -50%;  background-repeat: no-repeat;" class="row">
+<div id="grade_container" style="background-position: 49% -50%;  background-repeat: no-repeat;" class="row">
 <h1 class="avg_grade" style="padding-bottom:32px"> <span>{{climb.grade.average}}</span></h1>
 
 <div class=" bargraph">
  <div>
-  <div class="" style="flex-basis: 15%;flex-grow: 0; border-right: 1px solid #eee;;">
+  <div class="" style="flex-basis: 15%;flex-grow: 0; border-right: 1px solid var(--border-c);">
    <div class="" style="height:80%; text-align: center;">100%</div>
-   <div  class="" style="height:20%; text-align: center;border-bottom: 1px solid #eee;">0%</div>
+   <div  class="" style="height:20%; text-align: center;border-bottom: 1px solid var(--border-c);">0%</div>
  </div>
 
  <!-- bars of graph -->
@@ -87,22 +102,22 @@
  </div>
 </div>
 <div>
-  <div class="" style="flex-basis: 15%;flex-grow: 2; border-right: 1px solid #eee;">
+  <div class="" style="flex-basis: 15%;flex-grow: 2; border-right: 1px solid var(--border-c);">
 
   </div>
-  <div class="bar" style=" border-right: 1px solid #eee;box-sizing: border-box;text-align: center;">
+  <div class="bar" style=" border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
    V1
  </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid #eee;box-sizing: border-box;text-align: center;">
+ <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
    V2
  </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid #eee;box-sizing: border-box;text-align: center;">
+ <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
    V3
  </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid #eee;box-sizing: border-box;text-align: center;">
+ <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
    V3
  </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid #eee;box-sizing: border-box;text-align: center;">
+ <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
     V3
   </div>
 </div>

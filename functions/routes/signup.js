@@ -1,17 +1,17 @@
 // Made by Emerson Cole Philipp
 // 
-//'their' stuff
 const ObjectID = require('mongodb').ObjectID;
 const express = require("express");
 const router = express.Router();
-//stuff this middleware needs
 const {check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const {verify} = require('hcaptcha');
+//
 const connect = require('../connect');
 const base62 = require('../my_modules/base62');
 
 module.exports = router;
+const saltRounds = 10;
 
 // Validation rules.
 var validation = [
@@ -34,7 +34,7 @@ var validation = [
   })
 ];
 
-//routes "../signup"
+//signup routes
 
 router.get('/', (req , res) => {
 
@@ -42,7 +42,7 @@ router.get('/', (req , res) => {
     res.redirect('/account');
     return;
   }
-  res.render('signup',{});
+  res.render('signup',{captcha_site_key : process.env.HCAPTCHA_SITE_KEY});
 });
 
 
@@ -50,18 +50,39 @@ router.post('/', validation, async (req , res) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(422).render( 'signup', {'errors':errors.errors, 'req':req.body});
+    res.status(422).render( 'signup', {'errors':errors.errors, 'req':req.body, 'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
+    return;
+  }  
+
+  //verify hCaptcha
+  var token = req.body["h-captcha-response"];
+  if ((await verify(process.env.HCAPTCHA_SECRET, token).catch(console.error)).success === false){
+    res.status(422).render( 'signup', 
+                {'errors': 
+                    [{"value": "null",
+                    "msg" : "You need to complete the hCaptcha to create an account.",
+                    "param": "captcha",
+                    "location":"body"}],
+                'req':req.body,
+                'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
+
     return;
   }
 
-  if(await getUser(req.body.email) != null){
-    res.render('signup', {'errors': 
-                      [{"value": req.body.email, "msg" : "That email address is already used by another user account!", "param": "email", "location":"body"}]
-                      , 'req':req.body
-                    });
+  //check for existing user email
+  if( await (await connect.getDb().collection("users").findOne({"email" : req.body.email })) != null ) {
+    res.render('signup', 
+                {'errors': 
+                    [{"value": req.body.email,
+                    "msg" : "That email address is already used by another user account!",
+                    "param": "email",
+                    "location":"body"}],
+                'req':req.body,
+                'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
     return ;
   }
 
+  //create user
   const userDocument = {
     _id: new ObjectID(),
     last_ip: req.socket.remoteAddress,
@@ -72,13 +93,24 @@ router.post('/', validation, async (req , res) => {
     definitely_not_a_password_salt: ''
   };
 
-  let gym = await createGym(req.body.gym_name, userDocument._id);
-  userDocument.gyms = [gym.insertedId];
-  
-  if(req.body.phone != null){
-    userDocument.phone = req.body.phone;
-  }
 
+  if(!await createGym(req.body.gym_name, userDocument._id)){
+    res.render('signup', 
+              {'errors': 
+                 [{"value": "",
+                 "msg" : "Thats a seriously messed up error on our back-end! Shoot me with an email PLEASE! climbgrader@gmail.com",
+                 "param": "",
+                 "location":"body"}],
+             'req':req.body,
+             'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
+    return;
+  }
+  userDocument.gyms = [gym.insertedId];
+
+  // maybe when/if i get money for SMS
+  // if(req.body.phone != null){
+  //   userDocument.phone = req.body.phone;
+  // }
 
   //wait for bcrypt password hashing
   bcrypt.genSalt(saltRounds, function(error, salt) {
@@ -94,9 +126,10 @@ router.post('/', validation, async (req , res) => {
       .collection("users")
       .insertOne(userDocument, function (error, result) {
         if (error) {
-          res.status(400).send("Error inserting matches!");
+          //failure ofcoursse
+          res.status(400).redirect('/login' );
         } else {
-          //res.render( 'signup',{});
+          //fuckin amazing right here
           req.session.message = "You have successfully registered an account." + req.body.name ;
           res.redirect('/login' );
         }      
@@ -126,8 +159,4 @@ async function createGym(gymname, ownerId){
     console.log(error);
     return null;
   }
-}
-async function getUser(email){
-  let res = await connect.getDb().collection("users").findOne({"email" : email });
-  return res;
 }

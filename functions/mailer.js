@@ -1,26 +1,23 @@
+const formData = require('form-data');
+const path = require("path");
+// const dotenv = require('dotenv').config({path: path.join(__dirname,'../private/.env')})
+
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+var DOMAIN = process.env.MAILGUN_DOMAIN;
 
 
-var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: gmail_email,
-    pass: gmail_pass
-  }
-});
+const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API });
 
-var mailOptions = {
-  from: 'youremail@gmail.com',
-  to: 'myfriend@yahoo.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
+const data = {
+  from: 'Excited User <me@'+process.env.MAILGUN_DOMAIN+'>',
+  to: ['knaxelbaby@gmail.com'],
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!'
 };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+
+// mg.messages.create(process.env.MAILGUN_DOMAIN, data)
+//   .then(msg => console.log(msg)) // logs response data
+//   .catch(err => console.log(err));;
