@@ -11,10 +11,11 @@ const dotenv = require('dotenv').config({path: path.join(__dirname,'../private/.
 const connect = require('./connect');
 const route_signup = require("./routes/signup");
 const route_login = require("./routes/login");
-const route_browse = require("./routes/browse")
+const route_browse = require("./routes/browse");
+const route_set = require("./routes/set");
 const base62 = require('./my_modules/base62');
 
-var nodemailer = require('./mailer.js');
+// var nodemailer = require('./mailer.js');
 
 //express app object
 const app = express();
@@ -58,6 +59,7 @@ async function init(){
 	app.set("view engine", "hbs") ;
 	app.set("views",path.join(__dirname, '../views/'));
 
+	//initialize the application routing dirs
 	init_routes();
 
 }
@@ -72,41 +74,43 @@ async function init_routes(){
 
 	});
 
-	//the complex route stuff is in these 'route' modules:)
+	// authentication
 	app.use('/signup', route_signup);
 	app.use('/login', route_login);
-	app.use('/g', route_browse);
 	app.all('/logout', (req,res)=>{
-    req.session.destroy();
-    res.redirect('/login');
+    	req.session.destroy();
+    	res.redirect('/login');
 	});
 
+	//to be seperated
 	app.get('/account', (req , res) => {
 		if(!req.session.user){
 			res.redirect('/login');
 			return;
 		}
 
-		res.render( 'account', {'user' : req.session.user});
+		res.render( 'account', {'user' : req.session.user, 'DOMAIN':  process.env.IP, 'PORT': process.env.PORT});
 	});
 
-	app.get('/grade', (req , res) => {
-		res.render( 'grade', {'user' : req.session.user});
-	});
+	//main usage
+	//g="grade"
+	//for viewing and grading climb routes
+	app.use('/g', route_browse);
+	//s="setting"
+	//for setting/creating climb routes
+	app.use('/s', route_set);
 
-	app.get('/grading', (req , res) => {
-		res.render( 'grading', {'user' : req.session.user});
-	});
 
-	app.get('/set', (req , res) => {
-		res.render( 'set', {'user' : req.session.user});
-	});
 
+
+	//everything else 404
 	app.get('*', function(req, res){
-  res.status(404).render("404", {url: req.url});
-});
-	app.listen(app.get('port'), '192.168.0.110', function() {
-		console.log("Node app is running at localhost:" + app.get('port'))
+	  res.status(404).render("404", {url: req.url});
+	});
+
+	//start listenging
+	app.listen(app.get('port'), process.env.IP , function() {
+		console.log("Node app is running at :" +process.env.IP + ":" + app.get('port'))
 	});
 }
 

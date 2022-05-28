@@ -1,37 +1,111 @@
 {{>header}}
 
-{{>navbar}}
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<style>
+	label{
+		font-size: 2rem;
+	}
+	.row{
+		display: flex; justify-content: center;
+	}
+	button{
+		margin-left: 0;
+		font-size: 2rem;
+		line-height: 0;
+		padding: 5rem;
+	}
+	p{
+		margin-bottom: 1rem;
+	}
+</style>
+
+<script type="text/javascript">
+	$(function () {
+		$("#input_grade").on("input", function (e) {
+			var input = $("#input_grade").val();
+			if(typeof input === 'string' || input instanceof String){
+				$("#input_grade").val(0);
+			}
+			if(input.length>1 && input< 10){
+				$("#input_grade").val(parseInt(input));
+				return;
+			}
+			if(input > 16 ){
+				$("#input_grade").val(17);
+
+				return;
+			}
+		});
+	});
+</script>
 
 <div class="row" >
-	<div class="five columns" style="margin: 0 auto;float: none;text-align: center;margin-top: 5%"> <p>Remember! Each gym should only have one account. Only your gym owner, manager, or team leader needs to have an account for your gym!</p></div>
+	<div class="five columns" style="margin: 0 auto;float: none; text-align: center;margin-top: 5%"> <p>Welcome to the setting portal.</p></div>
 </div>
 <hr>
-<form>
-	<div  style="margin-top: 5%" class="row">
-		<div class="column"> 
-			<label > email </label>
-			<input type="password" class="u-full-width" />
+
+
+{{#if new_climb}}
+<form action="" method="get">
+<div class="row" style="margin-top:5%;" >
+		<div class="col">
+			<h1><b>SUCCESS!</b></h1>
+			<p> Thank you <b>{{new_climb.setter_name}}</b> ! Write this code next to the climbing route you have created : </p>
+			<h1 style="font-size: 9.5rem; font-feature-settings: 'liga' 0;letter-spacing:15px; font-family: sans-serif; padding-left:18px;border:1px solid var(--main-c)">{{new_climb.climb_code}}</h1>
+			<h1><b>EXPIRATION</b></h1>
+			<p>This code/climb will expire at <small style="color:gray">(30 days from now) </small> : </p> <p><b>{{new_climb.expire_at}}</b> </p>
 		</div>
+		
 	</div>
-	<div  class="row">
-		<div class="column"> 
-			<label > password </label>
-			<input type="password" class="u-full-width" />
-		</div>
-	</div>
-	<div  class="row">
-		<div class="column"> 
-			<label > password confirm </label>
-			<input type="password" class="u-full-width" />
-		</div>
-	</div>
-	<div  class="row">
-		<div class="column"> 
-			<label > gym name </label>
-			<input type="text" class="u-full-width" />
-		</div>
-	</div>
-	<div  class="row">
-		<button style="float:right;">Create the Account</button>
+
+	<div class="row">
+		
+		<button type="submit" href="#" >Set Another climb</button>
+
 	</div>
 </form>
+
+{{else}}
+<form method="post" action="">
+	<div class="row" style="margin-top:5%;">
+		<p style="text-align:center;">When you are finished setting your climb- enter your name and other information below to generate the code users will use.</p>
+		<h4 style="text-align: center;" >{{next_code}}</h4>
+	</div>
+	{{#if errors}}
+	<div class="row" >
+		<div class="col">
+		{{#each errors}}
+		<p style="color: red; text-align: center">
+			{{this.msg}}
+		</p>
+		{{/each}}
+	</div>
+	</div>
+	{{/if}}
+	<!--<div class="row" style="margin-top:5%;display: flex;justify-content: center;">
+		<label style='line-height: 4rem;'>Grading System : </label>
+		<select style="margin-left:5%">
+			<option>Test</option>
+			<option>Test2</option>
+		</select>
+	</div>-->
+	<div class="row" style="margin-top:5%;">
+		<label >Setter Name : </label>
+		<input style="margin-left:5%;" class="" type="text" name="setter_name" placeholder="alias" />
+	</div>
+	<div class="row" style="margin-top:5%;">
+		<label style="line-height: 5rem; margin-right: 1rem;" >Route Grade : </label>
+		<div  class="row" >
+			<h2 style="font-size: 3rem; ">V
+			<input id="input_grade" style="width:5rem;margin-left:.1rem;margin-bottom:0;height: unset;"   type="text" name="setter_grade" value="0"/></h2>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom:5%;">
+		<div class="h-captcha" data-sitekey="{{captcha_site_key}}"></div>
+	</div>
+	<div class="row" >
+		<button name="confirm" type="confirm" value="confirm">create climb code!</button>
+	</div>
+</form>
+{{/if}}

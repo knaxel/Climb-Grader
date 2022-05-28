@@ -1,134 +1,203 @@
 
 <style>
 
- @font-face {
-   font-family: system;
-   src: url(font/RobotoMono-Light.ttf);
- }
-  .avg_grade{
-   text-align: center;
-   font-size: 12.0rem;
-   font-family: font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-   text-transform: uppercase;
+.bargraph{
+ font-family: font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+ padding: 1.50rem 1.0rem 2.5rem 1.0rem;
+ display: ;
 
- }
-
-
- .bargraph{
-   font-family: font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-   padding: 1.50rem 1.0rem 2.5rem 1.0rem;
-   display: ;
-
- }
- .bargraph > div:first-child{
-   display: flex;
-   flex-direction: row;
-   height: 95px;
-   color: #a3a3a3;
- }
- .bargraph > div:last-child{
-   display: flex;
-   flex-direction: row;
-   color: #a3a3a3;
- }
- .bar { 
-   flex-basis: 30%;
-   display: flex;
-   flex-direction: column; box-sizing: border-box;
- }
- .gradebutton {
-   display: block;text-align: center;
-   font-size: 32px;
-   text-decoration: none;
-   text-transform: uppercase;
-   color: white;
-   font-weight: 600;
-   background-color: #1EAEDB;
-   height: 100%;
-   border-radius: 9px;
-   padding:5px 0px;
- }
- .button:hover,a:hover{
-    color: white;
-  }
-    #grade_container{
-    background-image: url(/images/gradeshadow_light.jpg);
-  }
+}
+.bargraph > div:first-child{
+ display: flex;
+ flex-direction: row;
+ height: 95px;
+ color: #a3a3a3;
+}
+.bargraph > div:last-child{
+ display: flex;
+ flex-direction: row;
+ color: #a3a3a3;
+}
+.bar { 
+ flex-basis: 30%;
+ display: flex;
+ flex-direction: column; box-sizing: border-box;
+}
+#grade_container{
+  background-image: url(/images/gradeshadow_light.jpg);
+}
 @media (prefers-color-scheme: dark) {
   #grade_container{
     background-image: url(/images/gradeshadow_dark.jpg);
   }
 
- .bargraph > div:first-child,
- .bargraph > div:last-child{
+  .bargraph > div:first-child,
+  .bargraph > div:last-child{
    color: #535353;
 
  }
 
 }
+img.logo{
+  display: block;
+  margin: 0 auto;
+}
+.avg_grade{
+  text-align: center;
+  font-size: 12.0rem;
+  font-family: RobotoMono;
+
+}
+
+@font-face {
+  font-family: RobotoMono;
+  src: url(/font/RobotoMono-Light.ttf);
+}
+
+.button {
+ display: block;text-align: center;
+
+ flex-grow: 1;
+ font-size: 32px;
+ text-decoration: none;
+ text-transform: uppercase;
+ color: white;
+ font-weight: 600;
+ background-color: #1EAEDB;
+ border: none;
+ height: 100%;
+ border-radius: 9px;
+ padding:5px 0px;
+}
+
+input[type="number"]{
+  padding: 0px;
+  font-size: 12.0rem;
+  height: unset;
+  width: 15rem;
+  letter-spacing: -1.0rem;
+}
+.button:hover,a:hover{
+  color: white;
+}
 </style>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script type="text/javascript">
+var grading = false;
+function toggle_grading(){
+  if(grading){
+
+
+    $('#grading').css('display',"none");
+    $('#browsing').css('display',"block");
+  }else{
+
+    $('#browsing').css('display',"none");
+    $('#grading').css('display',"block");
+
+  }
+  grading = ! grading;
+}
+$(function () {
+  $("#input_grade").on("input", function (e) {
+    var input = $("#input_grade").val();
+    if(typeof input === 'string' || input instanceof String){
+      $("#input_grade").val(0);
+    }
+    if(input.length>1 && input< 10){
+      $("#input_grade").val(parseInt(input));
+      return;
+    }
+    if(input > 16 ){
+      $("#input_grade").val(17);
+
+      return;
+    }
+  });
+});
+</script>
 {{>header}}
 <hr>
-<div id="grade_container" style="background-position: 49% -50%;  background-repeat: no-repeat;" class="row">
-<h1 class="avg_grade" style="padding-bottom:32px"> <span>{{climb.grade.average}}</span></h1>
 
-<div class=" bargraph">
- <div>
-  <div class="" style="flex-basis: 15%;flex-grow: 0; border-right: 1px solid var(--border-c);">
-   <div class="" style="height:80%; text-align: center;">100%</div>
-   <div  class="" style="height:20%; text-align: center;border-bottom: 1px solid var(--border-c);">0%</div>
- </div>
 
- <!-- bars of graph -->
- <div class="bar" style="height:100%;">
-   <div class="" style="height:90%;"></div>
-   <div class="" style="height:10%; background:#1EAEDB;"></div>
- </div>
- <div class="bar" style="height:100%;">
-   <div class="" style="height:20%; "></div>
-   <div class="" style="height:80%; background:#1EAEDB;"></div>
- </div>
- <div class="bar" style="height:100%;">
-   <div class="" style="height:70%; "></div>
-   <div class="" style="height:30%; background:#1EAEDB;"></div>
- </div>
- <div class="bar" style="height:100%;">
-   <div class="" style="height:70%; "></div>
-   <div class="" style="height:30%; background:#1EAEDB;"></div>
- </div>
- <div class="bar" style="height:100%;">
-   <div class="" style="height:70%; "></div>
-   <div class="" style="height:30%; background:#1EAEDB;"></div>
- </div>
-</div>
-<div>
-  <div class="" style="flex-basis: 15%;flex-grow: 2; border-right: 1px solid var(--border-c);">
+<h3  style="text-align: center;" >@ {{gym.name}}</h3>
+<h5  style="text-align: center;" >{{climb.climb_code}} set by {{climb.setter_name}}</h5>
 
+<hr>
+
+<div id="browsing" >
+  
+{{#if success}}
+<h5 style="text-align:center;color:green;"> You have successfully graded the climb! </h5>
+{{else}}
+{{/if}}
+  <div id="grade_container" style="background-position: 45% 100%;  background-repeat: no-repeat;" class="row">
+    <h1 class="avg_grade" style="padding-bottom:32px"> <span>{{climb.grade.average}}</span></h1>
   </div>
-  <div class="bar" style=" border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
-   V1
- </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
-   V2
- </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
-   V3
- </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
-   V3
- </div>
- <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">
-    V3
+
+  <div class="bargraph">
+    <div>
+      <div class="" style="flex-basis: 15%;flex-grow: 0; border-right: 1px solid var(--border-c);">
+        <div class="" style="height:80%; text-align: center;">100%</div>
+        <div  class="" style="height:20%; text-align: center;border-bottom: 1px solid var(--border-c);">0%</div>
+      </div>
+
+
+      <!-- bars of graph -->
+      <div class="bar" style="height:100%;">
+       <div class="" style="height:90%;"></div>
+       <div class="" style="height:10%; background:#1EAEDB;"></div>
+     </div>
+     <div class="bar" style="height:100%;">
+      <div class="" style="height:20%; "></div>
+      <div class="" style="height:80%; background:#1EAEDB;"></div>
+    </div>
+    <div class="bar" style="height:100%;">
+      <div class="" style="height:70%; "></div>
+      <div class="" style="height:30%; background:#1EAEDB;"></div>
+    </div>
+    <div class="bar" style="height:100%;">
+      <div class="" style="height:70%; "></div>
+      <div class="" style="height:30%; background:#1EAEDB;"></div>
+    </div>
+    <div class="bar" style="height:100%;">
+      <div class="" style="height:70%; "></div>
+      <div class="" style="height:30%; background:#1EAEDB;"></div>
+    </div>
   </div>
-</div>
 
-</div>
-
+  <div >
+    <div class="" style="flex-basis: 15%;flex-grow: 2; border-right: 1px solid var(--border-c);"></div>
+    <div class="bar" style=" border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V1</div>
+    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V2</div>
+    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
+    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
+    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
+  </div>
 </div>
 <hr>
-<h3  style="text-align: center;" >University of Colorado Boulder</h3>
-<h5  style="text-align: center;" >{{climb.climb_code}} set by SMORF</h5>
-<hr>
-<div class="row" style="">
-  <a href="?grading=true" class="gradebutton" style="">Grade This Route!</a>
+<div class="row" style="justify-content: center;display: flex;">
+  <button class="button" onclick="toggle_grading();" style="flex-grow:1;">Grade this Route!</button>
+</div>
+</div>
+
+<div id="grading" style="display:none;">
+  <form action="" method="post">
+
+    <div style="" class="row">
+
+      <h1 class="avg_grade" style=""> <span> V</span><input id="input_grade" name="incorrect_opinion" type="number" pattern="[0-9]*" value="0"></input></h1>
+
+
+      <div class="row" style="justify-content: center;display: flex;">
+        <div class="h-captcha" data-sitekey="{{captcha_site_key}}"></div>
+      </div>
+      <hr>
+      <div class="row" style="display:flex">
+        <button class="button" type="button" onclick="toggle_grading();" style="">back</button>
+        <button class="button" type="submit" style="margin-left: 5%;">Submit!</button>
+      </div>
+    </div>
+  </form>
 </div>

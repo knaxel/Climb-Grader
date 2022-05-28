@@ -79,11 +79,11 @@
 	var code_gym = "{{user.gym._id}}";
 	var code_setters = "{{user.gym.setter_code}}";
 
-	var url_climber = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.110:3000/g/` + code_gym  ;
+	var url_climber = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://{{DOMAIN}}:{{PORT}}/g/` + code_gym  ;
 	var qr_img_climber = $("#qr_climber");
 	qr_img_climber[0].src = url_climber;
 
-	var url_setter = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.110:3000/s/`+ code_gym +"/"+ code_setters;
+	var url_setter = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://{{DOMAIN}}:{{PORT}}/s/`+ code_gym +"/"+ code_setters;
 	var qr_img_setter = $("#qr_setter");
 	qr_img_setter[0].src = url_setter;
 

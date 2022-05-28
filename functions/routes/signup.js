@@ -31,6 +31,13 @@ var validation = [
       throw new Error('Password repeat does not match with password!');
     }
     return true;
+  }),
+  check('h-captcha-response')
+  .custom(async (value,{req})=>{
+    if((await verify(process.env.HCAPTCHA_SECRET, value).catch(console.error)).success === false){
+       throw new Error("You must successfully complete the hCaptcha to continue.");
+    }
+    return true;
   })
 ];
 
@@ -53,21 +60,6 @@ router.post('/', validation, async (req , res) => {
     res.status(422).render( 'signup', {'errors':errors.errors, 'req':req.body, 'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
     return;
   }  
-
-  //verify hCaptcha
-  var token = req.body["h-captcha-response"];
-  if ((await verify(process.env.HCAPTCHA_SECRET, token).catch(console.error)).success === false){
-    res.status(422).render( 'signup', 
-                {'errors': 
-                    [{"value": "null",
-                    "msg" : "You need to complete the hCaptcha to create an account.",
-                    "param": "captcha",
-                    "location":"body"}],
-                'req':req.body,
-                'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
-
-    return;
-  }
 
   //check for existing user email
   if( await (await connect.getDb().collection("users").findOne({"email" : req.body.email })) != null ) {
@@ -93,8 +85,8 @@ router.post('/', validation, async (req , res) => {
     definitely_not_a_password_salt: ''
   };
 
-
-  if(!await createGym(req.body.gym_name, userDocument._id)){
+  let gym = await createGym(req.body.gym_name, userDocument._id);
+  if(!gym){
     res.render('signup', 
               {'errors': 
                  [{"value": "",
@@ -105,6 +97,7 @@ router.post('/', validation, async (req , res) => {
              'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
     return;
   }
+
   userDocument.gyms = [gym.insertedId];
 
   // maybe when/if i get money for SMS
@@ -127,7 +120,7 @@ router.post('/', validation, async (req , res) => {
       .insertOne(userDocument, function (error, result) {
         if (error) {
           //failure ofcoursse
-          res.status(400).redirect('/login' );
+          res.status(400).redirect('/signup' );
         } else {
           //fuckin amazing right here
           req.session.message = "You have successfully registered an account." + req.body.name ;
@@ -151,8 +144,8 @@ async function createGym(gymname, ownerId){
 
   try{
     //add the new gym
-    let ress = await connect.getDb().collection("gyms").insertOne(gymDocument);
-    return ress;
+    let res = await connect.getDb().collection("gyms").insertOne(gymDocument);
+    return res;
 
   }catch(error){
     //I wanna know this error happened, dont tell users. ie There is no good reason why that insert should not work.

@@ -16,7 +16,14 @@ var validation = [
   check('password')
   .isLength({ min: 8 }).withMessage('Password must be at least 8 characters!')
   .matches('[0-9]').withMessage('Password must contain a number!')
-  .matches('[A-Z]').withMessage('Password must contain an uppercase letter!')
+  .matches('[A-Z]').withMessage('Password must contain an uppercase letter!'),
+  check('h-captcha-response')
+  .custom(async (value,{req})=>{
+  	if((await verify(process.env.HCAPTCHA_SECRET, value).catch(console.error)).success === false){
+  	   throw new Error("You must successfully complete the hCaptcha to continue.");
+  	}
+  	return true;
+  })
 ];
 
 router.get('/', (req , res) => {
@@ -32,27 +39,14 @@ router.get('/', (req , res) => {
 router.post('/', async (req, res) => {
 	
 	const errors = validationResult(req);
-	const incorrect_res = {'errors': [{"value": req.body.email, "msg" : "You have entered an incorrect username or password!", "param": "email", "location":"body"}]};
+	const incorrect_res = {'errors': [{"value": req.body.email, "msg" : "You have entered an incorrect username or password!", "param": "email", "location":"body"}],'captcha_site_key' : process.env.HCAPTCHA_SITE_KEYA};
 
 	if (!errors.isEmpty()) {
+ 
 	  res.status(401).render( 'login', incorrect_res);
 	  return;
 	}
 	
-  //verify hCaptcha
-  var token = req.body["h-captcha-response"];
-  if ((await verify(process.env.HCAPTCHA_SECRET, token).catch(console.error)).success === false){
-    res.status(422).render( 'login', 
-                {'errors': 
-                    [{"value": "null",
-                    "msg" : "You need to complete the hCaptcha to create an account.",
-                    "param": "captcha",
-                    "location":"body"}],
-                'req':req.body,
-                'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
-    return;
-  }
-
 	const userDocument = await connect.getDb().collection("users").findOne({"email" : req.body.email });
 
 	if(userDocument == null){

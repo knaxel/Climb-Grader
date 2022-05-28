@@ -2,7 +2,7 @@
 {{>header}}
 <hr>
 <h3  style="text-align: center;" >{{gym.name}}</h3>
-<h5  style="text-align: center;" >Climbs at this gym have a 5 digit code on them you can enter here to find them!</h5>
+<h5  style="text-align: center;" >Climbs at this gym have a 0-5 digit code on them you can enter here to find them!</h5>
 <hr>
 {{#if error}}
 <div class="row">
@@ -13,11 +13,13 @@
 <hr>
 {{/if}}
 
-<input name="search" id="input_search" type="number" pattern="[0-9]*" placeholder="00000"/>
-<button onclick="search();" name="confirm" > Confirm </button>
+<form action="javascript:search();">
+	<input name="search" id="input_search" type="number" pattern="[0-9]*" placeholder="00000"/>
+	<button onclick="search();" name="confirm" > Confirm </button>
+</form>
 
 <script type="text/javascript">
-function search(){
-	window.location.href = "/g/{{gym._id}}/" +$("#input_search").val();
-}
+	function search(){
+		window.location.href = "/g/{{gym._id}}/" +$("#input_search").val();
+	}
 </script>
