@@ -50,8 +50,10 @@ db.gyms.aggregate([
 	var session = req.session;
 	
 	if(! session.gym || session.gym == null){
-		res.status(404).render('404', {url:'You seem suspicious so just stop- I made this for fun, dont ruin it for everone else. I know that you are trying to spam.' });
-		return;
+		if(! await gym_session(session, req.params.gym_code)){
+			res.status(404).render('404', {url:'/g'+req.url});
+			return;
+		}
 	}
 
 	if(req.params.climb_code.length > 5){
@@ -64,6 +66,37 @@ db.gyms.aggregate([
 
 	if(climb){
 		
+		var votes = climb.votes;
+		var avg = climb.grade.setter;
+		var graph = {};
+		for( var i = Math.max(0, climb.grade.setter); i < climb.grade.setter + 3 + Math.abs( Math.min(climb.grade.setter-2, 0) ) ; i++){
+			graph[i] = 0;
+		}
+
+		const n = votes.length;
+		for (const vote of votes){
+			if( Math.abs(vote.grade - climb.grade.setter ) > 2) {
+				continue;
+			}
+			if ( graph[''+vote.grade+''] == null){
+				graph[''+vote.grade+''] = 1;
+			}else{
+				graph[''+vote.grade+'']++;
+			}
+		}
+
+		for (const grade of Object.keys(graph) ){
+			avg = avg+grade*graph[grade]; 
+			graph[grade] = graph[grade]/n;
+		}
+
+
+
+		avg=Math.ceil(avg/n);
+
+		climb['grade'].average = avg;
+		climb['graph'] = graph;
+
 
 		res.render( 'grade', {'user' : req.session.user, "gym" : req.session.gym, "climb" : climb ,'success':req.query.success, 'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
 	

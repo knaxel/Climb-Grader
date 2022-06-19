@@ -33,17 +33,16 @@ router.get('/', (req , res) => {
 		return;
 	}
 	var msg = req.session.message;
-	res.render( 'login',{'msg' : msg,captcha_site_key : process.env.HCAPTCHA_SITE_KEY});
+	res.render( 'login',{'msg' : msg,'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validation, async (req, res) => {
 	
-	const errors = validationResult(req);
-	const incorrect_res = {'errors': [{"value": req.body.email, "msg" : "You have entered an incorrect username or password!", "param": "email", "location":"body"}],'captcha_site_key' : process.env.HCAPTCHA_SITE_KEYA};
+	const errors =  validationResult(req);
+	const incorrect_res = {'errors': [{"value": req.body.email, "msg" : "You have entered an incorrect username or password!", "param": "email", "location":"body"}],'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY};
 
 	if (!errors.isEmpty()) {
- 
-	  res.status(401).render( 'login', incorrect_res);
+	  res.status(401).render( 'login', {'errors': errors.errors,'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
 	  return;
 	}
 	
@@ -53,6 +52,7 @@ router.post('/', async (req, res) => {
 	  res.status(401).render( 'login', incorrect_res);
 	  return;
 	}
+
 
 	// for when email verification is fully complete
 	// if(userDocument.verified == false || userDocument.verified == 'false'  ){

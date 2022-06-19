@@ -44,7 +44,6 @@ async function init(){
 	    cookie: { maxAge: 1000 * 60 * 60 * 24 },
      resave: true
 	}));
-	
 	app.use(express.static( './public'));
 	app.use(express.json({limit: '20mb'}));
 	app.use(express.urlencoded({ extended: false, limit: '20mb' }));
@@ -54,7 +53,8 @@ async function init(){
 	app.engine( 'hbs', engine( { 
 		extname: 'hbs', 
 		defaultLayout: "main" ,
-		partialsDir: path.join(__dirname, '../views/partials/')
+		partialsDir: path.join(__dirname, '../views/partials/'),
+  		helpers: require('./my_modules/handlebars-helpers') 
 	} ) );
 	app.set("view engine", "hbs") ;
 	app.set("views",path.join(__dirname, '../views/'));

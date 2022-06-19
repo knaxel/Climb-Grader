@@ -1,34 +1,42 @@
 
 <style>
 
-.bargraph{
- font-family: font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
- padding: 1.50rem 1.0rem 2.5rem 1.0rem;
- display: ;
+  #bargraph-label-{{climb.grade.setter}} {
+    color: #a3a3a3;
+  }
+  .bargraph{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    padding: 1rem;
+    display: ;
 
+  }
+  .bargraph > div:first-child{
+   display: flex;
+   flex-direction: row;
+   height: 90px;
+   color: #a3a3a3;
+ }
+ .bargraph > div:last-child{
+   display: flex;
+   flex-direction: row;
+   color: #a3a3a3;
+ }
+ .bar { 
+   flex-basis: 100%;
+   display: flex;
+   flex-direction: column; box-sizing: border-box;
+ }
+ #grade_container{
+  background-position: 50% 22px;
+  background-size: 50%;
+    background-repeat: no-repeat;
+  background-image: url(/images/gradeshadow_light.png);
 }
-.bargraph > div:first-child{
- display: flex;
- flex-direction: row;
- height: 95px;
- color: #a3a3a3;
-}
-.bargraph > div:last-child{
- display: flex;
- flex-direction: row;
- color: #a3a3a3;
-}
-.bar { 
- flex-basis: 30%;
- display: flex;
- flex-direction: column; box-sizing: border-box;
-}
-#grade_container{
-  background-image: url(/images/gradeshadow_light.jpg);
-}
+
+
 @media (prefers-color-scheme: dark) {
   #grade_container{
-    background-image: url(/images/gradeshadow_dark.jpg);
+    background-image: url(/images/gradeshadow_dark.png);
   }
 
   .bargraph > div:first-child,
@@ -44,7 +52,8 @@ img.logo{
 }
 .avg_grade{
   text-align: center;
-  font-size: 12.0rem;
+  font-size: 8.0rem;
+  padding-bottom: 36px;
   font-family: RobotoMono;
 
 }
@@ -84,98 +93,85 @@ input[type="number"]{
 
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <script type="text/javascript">
-var grading = false;
-function toggle_grading(){
-  if(grading){
+  var grading = false;
+  function toggle_grading(){
+    if(grading){
 
 
-    $('#grading').css('display',"none");
-    $('#browsing').css('display',"block");
-  }else{
+      $('#grading').css('display',"none");
+      $('#browsing').css('display',"block");
+    }else{
 
-    $('#browsing').css('display',"none");
-    $('#grading').css('display',"block");
+      $('#browsing').css('display',"none");
+      $('#grading').css('display',"block");
 
+    }
+    grading = ! grading;
   }
-  grading = ! grading;
-}
-$(function () {
-  $("#input_grade").on("input", function (e) {
-    var input = $("#input_grade").val();
-    if(typeof input === 'string' || input instanceof String){
-      $("#input_grade").val(0);
-    }
-    if(input.length>1 && input< 10){
-      $("#input_grade").val(parseInt(input));
-      return;
-    }
-    if(input > 16 ){
-      $("#input_grade").val(17);
+  $(function () {
+    $("#input_grade").on("input", function (e) {
+      var input = $("#input_grade").val();
+      if(typeof input === 'string' || input instanceof String){
+        $("#input_grade").val(0);
+      }
+      if(input.length>1 && input< 10){
+        $("#input_grade").val(parseInt(input));
+        return;
+      }
+      if(input > 16 ){
+        $("#input_grade").val(17);
 
-      return;
-    }
+        return;
+      }
+    });
+
+
+
   });
-});
 </script>
 {{>header}}
-<hr>
-
-
-<h3  style="text-align: center;" >@ {{gym.name}}</h3>
-<h5  style="text-align: center;" >{{climb.climb_code}} set by {{climb.setter_name}}</h5>
-
-<hr>
-
-<div id="browsing" >
-  
 {{#if success}}
 <h5 style="text-align:center;color:green;"> You have successfully graded the climb! </h5>
 {{else}}
 {{/if}}
-  <div id="grade_container" style="background-position: 45% 100%;  background-repeat: no-repeat;" class="row">
-    <h1 class="avg_grade" style="padding-bottom:32px"> <span>{{climb.grade.average}}</span></h1>
+<hr>
+
+
+<h3  style="text-align: center;" >@ {{gym.name}}</h3>
+<h5  style="text-align: center;" >{{climb.climb_code}} set by "{{climb.setter_name}}" 
+  <br> Graded V{{climb.grade.setter}}</h5>
+
+<hr>
+
+<div id="browsing" >
+  <div id="grade_container" style="" class="row">
+    <h1 class="avg_grade" style="margin:0;"> <span>V{{climb.grade.average}}</span></h1>
   </div>
 
   <div class="bargraph">
     <div>
-      <div class="" style="flex-basis: 15%;flex-grow: 0; border-right: 1px solid var(--border-c);">
-        <div class="" style="height:80%; text-align: center;">100%</div>
-        <div  class="" style="height:20%; text-align: center;border-bottom: 1px solid var(--border-c);">0%</div>
+      <div class="" style=" min-width: 40px;flex-grow: 0; border-right: 1px solid var(--border-c);">
+        <div class="" style="height:75%; text-align: center;">100%</div>
+        <div  class="" style="height:25%; text-align: center;border-bottom: 1px solid var(--border-c);">0%</div>
       </div>
 
-
-      <!-- bars of graph -->
+      {{#each climb.graph}}
       <div class="bar" style="height:100%;">
-       <div class="" style="height:90%;"></div>
-       <div class="" style="height:10%; background:#1EAEDB;"></div>
+       <div class="" style="height:calc(100% - calc( 100% * {{this}}  ));"></div>
+       <div class="" style="height: calc( 100% * {{this}}  ); background:#1EAEDB;"></div>
      </div>
-     <div class="bar" style="height:100%;">
-      <div class="" style="height:20%; "></div>
-      <div class="" style="height:80%; background:#1EAEDB;"></div>
-    </div>
-    <div class="bar" style="height:100%;">
-      <div class="" style="height:70%; "></div>
-      <div class="" style="height:30%; background:#1EAEDB;"></div>
-    </div>
-    <div class="bar" style="height:100%;">
-      <div class="" style="height:70%; "></div>
-      <div class="" style="height:30%; background:#1EAEDB;"></div>
-    </div>
-    <div class="bar" style="height:100%;">
-      <div class="" style="height:70%; "></div>
-      <div class="" style="height:30%; background:#1EAEDB;"></div>
-    </div>
-  </div>
+     {{/each}}
+   </div>
 
-  <div >
-    <div class="" style="flex-basis: 15%;flex-grow: 2; border-right: 1px solid var(--border-c);"></div>
-    <div class="bar" style=" border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V1</div>
-    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V2</div>
-    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
-    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
-    <div class="bar" style="flex-grow: 1; border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V3</div>
+   <div >
+    <div class="" style=" min-width: 40px;flex-grow: 0; border-right: 1px solid var(--border-c);"></div>
+    {{#each climb.graph}}
+    <div class="bar" id="bargraph-label-{{@key}}" style="border-top: 1px solid var(--border-c); border-right: 1px solid var(--border-c);box-sizing: border-box;text-align: center;">V{{@key}}</div>
+    {{/each}}
   </div>
 </div>
+
+
 <hr>
 <div class="row" style="justify-content: center;display: flex;">
   <button class="button" onclick="toggle_grading();" style="flex-grow:1;">Grade this Route!</button>

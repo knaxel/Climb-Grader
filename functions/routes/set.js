@@ -79,11 +79,11 @@ router.post('/:gym_code/:setter_code',validation_post, async (req, res) => {
 		setter_name : req.body.setter_name,
 		grade : {
 			system: "V-Scale",
-			average : "V0"
+			setter : req.body.setter_grade
 		},
 		votes : [{
 			id: req.sessionID,
-			grade : "V0"
+			grade : req.body.setter_grade
 
 		}]
 	};

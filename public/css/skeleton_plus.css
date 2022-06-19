@@ -1,7 +1,7 @@
 
 :root{
 	--bg-c: #fff;
-	--main-c: #222;
+	--main-c: #212121;
 	--sec-c: #41B7DC;
 	--border-c: #eee;
 	--slider-c: #ccc;
@@ -135,7 +135,7 @@ hr {border-color: var(--border-c);}
 @media (prefers-color-scheme: light) {
 	:root{
 		--bg-c: #fff;
-		--main-c: #222;
+		--main-c: #212121;
 		--sec-c: #41B7DC;
 		--border-c: #eee;
 		--slider-c: #ccc;
@@ -145,7 +145,7 @@ hr {border-color: var(--border-c);}
 @media (prefers-color-scheme: dark) {
 	
 	:root{
-		--bg-c: #222;
+		--bg-c: #212121;
 		--main-c: #f1f1f1;
 		--sec-c: #41B7DC;
 		--bc: #eee;
