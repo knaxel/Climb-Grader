@@ -1,4 +1,4 @@
-// Made by Emerson Cole Philipp
+// Made by Emerson Philipp
 // 
 // "their" stuff
 const path = require ('path');
