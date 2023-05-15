@@ -54,6 +54,8 @@
     These QR codes allow members to virtually review, grade, and ultimately providing you and your route setters valuable gym member feedback on the variety of climbing routes and opportunities in the gym.
   </p>
   
+  ![preview](https://github.com/knaxel/Climb-Grader/blob/main/github_1.PNG?raw=true)
+  
 <!-- [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/8IIgYCVqt5k/0.jpg)](https://www.youtube.com/watch?v8IIgYCVqt5k) -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
