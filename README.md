@@ -1,26 +1,6 @@
 
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -99,11 +79,52 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 - [npm](https://www.npmjs.com) 
 
-
 - [express](https://www.npmjs.com/package/express)
 - [express-handlebars](https://www.npmjs.com/package/express-handlebars)
 - [Express Session](https://www.npmjs.com/package/express-session)
 - [dotenv](https://www.npmjs.com/package/dotenv)
+- [MongoDB](https://www.mongodb.com) 
+
+DataBase Collections Schema in JSon
+```json
+{
+  "gyms" : [{
+    "_id": "ObjectId()",
+    "date_created" : "2022-06-15T05:17:56.653+00:00",
+    "name" : "The Climbing Gyms Name",
+    "gym_associate" :  "62a96b842e99e2ac7707ce69",
+    "setter_code" : "XXXXXX"
+  }],
+  "routes" : [{
+    "_id" : "ObjectId()",
+    "gym_code" : "ObjectID('Gym ID')",
+    "date_created" : "2022-01-01T00:00:00.000+00:00",
+    "expire_at" : "2022-01-31T00:00:00.000+00:00",
+    "climb_code" : "123456",
+    "setter_name" : "Mr.RouteSetter",
+    "grade" : {
+      "system": "V-Scale",
+      "setter" : "5"
+    },
+    "votes" : [{
+      "id": "ObjectId('Mr.RouteSetter ID')",
+      "grade" : "5"
+    }]
+  }],
+  "users" : [
+    "_id" : "ObjectId()",
+    "last_ip" :  "192.168.0.110",
+    "date_created" : "2022-06-15T05:20:05.367+00:00",
+    "email" : "email@gmail.com",
+    "definitely_not_a_password_hash" : "$2b$10$FfjtEF7ONncUoWRObUCUz.LZZbaHtiuMjzl1YB0tvNTVO3s6ZgjBC",
+    "definitely_not_a_password_salt" : "$2b$10$FfjtEF7ONncUoWRObUCUz.",
+    "gyms" :  [{
+      "0" : "62a96c055438f5c080486dbc"
+    }]
+  }]
+}
+```
+  
 
 ### Installation
 
