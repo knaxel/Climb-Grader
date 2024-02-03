@@ -1,5 +1,5 @@
-
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->
@@ -14,9 +14,8 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 [linkedin-url]: https://www.linkedin.com/in/e-m-
+
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -40,9 +39,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
   <p align="center">
@@ -64,7 +62,7 @@
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-- NodeJS 
+- NodeJS
 - ExpressJs
 - HandleBarsJS
 - MongoDB
@@ -72,22 +70,22 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
-- [npm](https://www.npmjs.com) 
+- [npm](https://www.npmjs.com)
 
 - [express](https://www.npmjs.com/package/express)
 - [express-handlebars](https://www.npmjs.com/package/express-handlebars)
 - [Express Session](https://www.npmjs.com/package/express-session)
 - [dotenv](https://www.npmjs.com/package/dotenv)
-- [MongoDB](https://www.mongodb.com) 
+- [MongoDB](https://www.mongodb.com)
 
 DataBase Collections Schema in JSon
+
 ```json
 {
   "gyms" : [{
@@ -126,7 +124,6 @@ DataBase Collections Schema in JSon
   }]
 }
 ```
-  
 
 ### Installation
 
@@ -142,7 +139,12 @@ _Below is instruction how to start running the web-app._
    ```
 3. Enter your MongoDB Connection String in a new file at `private/.env`
    ```js
-   CONNECTION_STR='MONGODB CONNECTION STRING';
+   CONNECTION_STR = "Your Mongo DB Connection URL";
+   HCAPTCHA_SITE_KEY = "Your hCaptha site key";
+   HCAPTCHA_SECRET = "Your hCaptha secret";
+   SESSION_SECRET = "Any random string unique the the environment";
+   IP = "ip or ipv4 the server is running on";
+   PORT = "port :|";
    ```
 4. Start with npm
    ```sh
@@ -160,11 +162,12 @@ _Below is instruction how to start running the web-app._
 - [x] Gym's and gym climbing routes expirations
 - [x] user ratings statistics
 - [ ] Add full list of gym routes
-- [ ] Let gym owners upload indoor map of the gym 
+- [ ] Let gym owners upload indoor map of the gym
   - [ ] Uploading of gym map image
   - [ ] Categorize climbing routes by walls
 
 <!-- LICENSE -->
+
 ## License
 
 Copyright 2023 Emerson Philipp
@@ -175,11 +178,9 @@ This repository is provided for educational and informational purposes only. Any
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
@@ -203,6 +204,4 @@ This repository is provided for educational and informational purposes only. Any
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
-
-
+[JQuery-url]: https://jquery.com
