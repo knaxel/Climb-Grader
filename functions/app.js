@@ -22,7 +22,6 @@ const app = express();
 
 //variables throughout 
 
-
 //connect to the database and then start the application
 connect.connectToServer( function( error, client ) {
 	if (error) {
@@ -42,7 +41,7 @@ async function init(){
 	    secret: process.env.SESSION_SECRET,
 	    saveUninitialized:true,
 	    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-     resave: true
+     	resave: true
 	}));
 	app.use(express.static( './public'));
 	app.use(express.json({limit: '20mb'}));
@@ -110,7 +109,7 @@ async function init_routes(){
 
 	//start listenging
 	app.listen(app.get('port'), process.env.IP , function() {
-		console.log("Node app is running at :" +process.env.IP + ":" + app.get('port'))
+		console.log("Node app is running at " + process.env.IP + ":" + app.get('port'))
 	});
 }
 

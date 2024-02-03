@@ -76,7 +76,6 @@ input:checked + .slider:before {
 	cursor: pointer;
 	line-height: 5;
 	font-weight: 400;
-	font-size: ;
 }
 img.logo{
 	display: block;
@@ -119,7 +118,7 @@ body{
 a{
 	color: var(--main-c);
 }
-a: hover{
+a:hover {
 	color: var(--sec-c);
 }
 .navlink{
@@ -132,6 +131,39 @@ img.qrcode{
 
 hr {border-color: var(--border-c);}
 
+::-webkit-scrollbar {
+	width: 8px;
+	height: 5px;
+  }
+  ::-webkit-scrollbar-button {
+	width: 0px;
+	height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+	background: #e1e1e1;
+	border: 0px none #ffffff;
+	border-radius: 50px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+	background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb:active {
+	background: #ffffff;
+  }
+  ::-webkit-scrollbar-track {
+	background: #666666;
+	border: 0px none #ffffff;
+	border-radius: 50px;
+  }
+  ::-webkit-scrollbar-track:hover {
+	background: #666666;
+  }
+  ::-webkit-scrollbar-track:active {
+	background: #666666;
+  }
+  ::-webkit-scrollbar-corner {
+	background: transparent;
+  }
 @media (prefers-color-scheme: light) {
 	:root{
 		--bg-c: #fff;
@@ -164,6 +196,15 @@ hr {border-color: var(--border-c);}
 	}
 	input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select{
 		background-color: var(--input-bg-c);
+		color: var(--main-c);
+	}
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover, 
+	input:-webkit-autofill:focus, 
+	input:-webkit-autofill:active{
+		background-color: transparent !important;
+		-webkit-text-fill-color: var(--main-c) !important;
+		-webkit-box-shadow: 0 0 0 50px var(--input-bg-c) inset;
 	}
 	.button:hover,
 	button:hover,
@@ -175,10 +216,10 @@ hr {border-color: var(--border-c);}
 	input[type="submit"]:focus,
 	input[type="reset"]:focus,
 	input[type="button"]:focus{
-background-color: var(--input-bg-c);
+		background-color: var(--input-bg-c);
 		color: white;
-	  border-color: #fff;
-	  outline: 1; 
+	  	border-color: #fff;
+	  	outline: 1; 
 	}
 	.slider{
 
@@ -186,6 +227,5 @@ background-color: var(--input-bg-c);
 	.header a:hover {
 		color: white;
 	}
-
 
 }
