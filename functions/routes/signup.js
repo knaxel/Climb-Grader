@@ -34,8 +34,9 @@ var validation = [
   }),
   check('h-captcha-response')
   .custom(async (value,{req})=>{
-    if((await verify(process.env.HCAPTCHA_SECRET, value).catch(console.error)).success === false){
-       throw new Error("You must successfully complete the hCaptcha to continue.");
+    const verr = await verify(process.env.HCAPTCHA_SECRET, value).catch(console.error);
+    if(verr.success === false){
+       throw new Error("You must successfully complete the hCaptcha to continue. Code: " + verr['error-codes'].toString() );
     }
     return true;
   })
@@ -44,12 +45,11 @@ var validation = [
 //signup routes
 
 router.get('/', (req , res) => {
-
   if(req.session.user){
     res.redirect('/account');
     return;
   }
-  res.render('signup',{captcha_site_key : process.env.HCAPTCHA_SITE_KEY});
+  res.render('signup', {captcha_site_key : process.env.HCAPTCHA_SITE_KEY});
 });
 
 
@@ -131,7 +131,6 @@ router.post('/', validation, async (req , res) => {
   });
 
 });
-
 
 async function createGym(gymname, ownerId){
   let gymDocument = {

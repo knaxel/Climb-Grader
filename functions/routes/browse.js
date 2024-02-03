@@ -66,36 +66,35 @@ db.gyms.aggregate([
 
 	if(climb){
 		
-		var votes = climb.votes;
-		var avg = climb.grade.setter;
-		var graph = {};
-		for( var i = Math.max(0, climb.grade.setter); i < climb.grade.setter + 3 + Math.abs( Math.min(climb.grade.setter-2, 0) ) ; i++){
+		let votes = climb.votes;
+		let avg = 0;
+		let graph = {};
+
+		for( let i = Math.max(0, parseInt(climb.grade.setter) - 3); i < parseInt(climb.grade.setter) + 3; i++){
 			graph[i] = 0;
 		}
 
-		const n = votes.length;
+		let n = 0;
 		for (const vote of votes){
-			if( Math.abs(vote.grade - climb.grade.setter ) > 2) {
+			if( Math.abs(parseInt(vote.grade) - parseInt(climb.grade.setter ) ) > 3) {
 				continue;
 			}
-			if ( graph[''+vote.grade+''] == null){
-				graph[''+vote.grade+''] = 1;
+			if (!(vote.grade in graph)){
+				graph[vote.grade] = 1;
 			}else{
-				graph[''+vote.grade+'']++;
+				graph[vote.grade]++;
 			}
+			n++;
 		}
+
 
 		for (const grade of Object.keys(graph) ){
-			avg = avg+grade*graph[grade]; 
+		    avg = avg+grade*graph[grade]; 
 			graph[grade] = graph[grade]/n;
 		}
-
-
-
-		avg=Math.ceil(avg/n);
-
-		climb['grade'].average = avg;
-		climb['graph'] = graph;
+		avg=Math.round(avg/n);
+		climb.grade.average = avg;
+		climb.graph = graph;
 
 
 		res.render( 'grade', {'user' : req.session.user, "gym" : req.session.gym, "climb" : climb ,'success':req.query.success, 'captcha_site_key' : process.env.HCAPTCHA_SITE_KEY});
