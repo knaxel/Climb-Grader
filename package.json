@@ -4,7 +4,7 @@
   "description": "A web application for climbing gyms that allows their patreons to grade and share grades with qr codes on indoor climbing routes.",
   "main": "app.js",
   "scripts": {
-    "start": "node functions/app.js "
+    "start": "node app.js "
   },
   "repository": {
     "type": "git",

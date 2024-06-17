@@ -1,19 +1,24 @@
 // Made by Emerson Philipp
 // 
-// "their" stuff
+var process = require('process')
+process.on('SIGINT', () => {
+  console.info("Interrupted")
+  process.exit(0)
+})
+
 const path = require ('path');
 const express = require('express');
 const {engine} = require('express-handlebars');
 const sessions = require('express-session');
-const dotenv = require('dotenv').config({path: path.join(__dirname,'../private/.env')})
+const dotenv = require('dotenv').config({path: path.join(__dirname,'private/.env')})
 
 // my stuff :] (its way cooler)
-const connect = require('./connect');
-const route_signup = require("./routes/signup");
-const route_login = require("./routes/login");
-const route_browse = require("./routes/browse");
-const route_set = require("./routes/set");
-const base62 = require('./my_modules/base62');
+const connect = require('./functions/connect');
+const route_signup = require("./functions/routes/signup");
+const route_login = require("./functions/routes/login");
+const route_browse = require("./functions/routes/browse");
+const route_set = require("./functions/routes/set");
+const base62 = require('./functions/my_modules/base62');
 
 // var nodemailer = require('./mailer.js');
 
@@ -52,11 +57,11 @@ async function init(){
 	app.engine( 'hbs', engine( { 
 		extname: 'hbs', 
 		defaultLayout: "main" ,
-		partialsDir: path.join(__dirname, '../views/partials/'),
-  		helpers: require('./my_modules/handlebars-helpers') 
+		partialsDir: path.join(__dirname, 'views/partials/'),
+  		helpers: require('./functions/my_modules/handlebars-helpers') 
 	} ) );
 	app.set("view engine", "hbs") ;
-	app.set("views",path.join(__dirname, '../views/'));
+	app.set("views",path.join(__dirname, 'views/'));
 
 	//initialize the application routing dirs
 	init_routes();

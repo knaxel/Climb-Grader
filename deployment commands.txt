@@ -1,0 +1,16 @@
+docker build -t climb-grader .
+docker save -o climb-grader.tar climb-grader
+scp .\climb-grader.tar ssh root@ip:/root/climb-grader
+
+
+ssh root@ip
+#password here -> return
+# or setup ssh key
+
+#remote commands
+docker load -i climb-grader.tar
+docker run -p 3000:3000 climb-grader
+
+
+# stop all
+# docker rm $(docker ps -a -q)
